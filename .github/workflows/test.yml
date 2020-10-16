@@ -1,0 +1,27 @@
+name: test
+
+on:
+  push:
+    branches:
+      - '*'         # matches every branch that doesn't contain a '/'
+      - '*/*'       # matches every branch containing a single '/'
+      - '**'        # matches every branch
+      - '!master'   # excludes master
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  
+  cloudformation-linter:
+    
+    runs-on: ubuntu-latest
+
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: cfn-lint
+        uses: ScottBrenner/cfn-lint-action@master
+        with:
+          args: "stack.yml"
