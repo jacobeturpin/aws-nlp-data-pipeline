@@ -39,7 +39,12 @@ jobs:
       
       - name: deploy
         uses: aws-actions/aws-cloudformation-github-deploy@v1.0.3
+        env:
+          LOG_BUCKET_NAME: mybucketname
+          ELASTICSEARCH_DOMAIN_NAME: esdomainname
+          ELASTICSEARCH_INDEX_NAME: test
+          FIREHOSE_NAME: firehosetest
         with:
-          name: MyStack
+          name: TestStack
           template: stack.yml
-          parameter-overrides: "Test=test"
+          parameter-overrides: "LogBucketName=${{ LOG_BUCKET_NAME }},ElasticsearchDomainName=${{ ELASTICSEARCH_DOMAIN_NAME }}, ElasticsearchIndexName=${{ ELASTICSEARCH_INDEX_NAME }},FirehoseName=${{ FIREHOSE_NAME }}"
