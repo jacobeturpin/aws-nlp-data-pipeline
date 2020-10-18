@@ -47,4 +47,4 @@ jobs:
         with:
           name: TestStack
           template: stack.yml
-          parameter-overrides: "LogBucketName=${{ LOG_BUCKET_NAME }},ElasticsearchDomainName=${{ ELASTICSEARCH_DOMAIN_NAME }}, ElasticsearchIndexName=${{ ELASTICSEARCH_INDEX_NAME }},FirehoseName=${{ FIREHOSE_NAME }}"
+          parameter-overrides: "LogBucketName=$LOG_BUCKET_NAME,ElasticsearchDomainName=$ELASTICSEARCH_DOMAIN_NAME,ElasticsearchIndexName=$ELASTICSEARCH_INDEX_NAME,FirehoseName=$FIREHOSE_NAME"
