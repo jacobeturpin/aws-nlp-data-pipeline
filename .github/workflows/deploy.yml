@@ -40,7 +40,7 @@ jobs:
       - name: deploy
         uses: aws-actions/aws-cloudformation-github-deploy@v1.0.3
         env:
-          LOG_BUCKET_NAME: nu-msds498-aws-nlp
+          LOG_BUCKET_NAME: numsds498awsnlp
           ELASTICSEARCH_DOMAIN_NAME: esdomainname
           ELASTICSEARCH_INDEX_NAME: test
           FIREHOSE_NAME: firehosetest
