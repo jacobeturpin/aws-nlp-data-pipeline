@@ -47,4 +47,5 @@ jobs:
         with:
           name: TestStack
           template: stack.yml
+          capabilities: 'CAPABILITY_NAMED_IAM'
           parameter-overrides: "LogBucketName=${{ env.LOG_BUCKET_NAME }},ElasticsearchDomainName=${{ env.ELASTICSEARCH_DOMAIN_NAME }},ElasticsearchIndexName=${{ env.ELASTICSEARCH_INDEX_NAME }},FirehoseName=${{ env.FIREHOSE_NAME }}"
