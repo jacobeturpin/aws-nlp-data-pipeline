@@ -21,7 +21,7 @@ jobs:
           args: "cfn/*.yml"
 
   cloudformation-deploy:
-    
+
     if: "!contains(github.event.commits[0].message, '[skip ci]')"
     
     runs-on: ubuntu-latest
@@ -29,9 +29,21 @@ jobs:
     needs: cloudformation-linter
     
     steps:
+
+      - name: setup
+        run: apt-get install zip
+
       - name: Checkout
         uses: actions/checkout@v2
-        
+      
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+
+      - name: Install AWS CLI
+        run: pip install awscli
+  
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -39,6 +51,16 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
       
+      - name: Deploy Lambda Artifact Bucket
+        uses: aws-actions/aws-cloudformation-github-deploy@v1.0.3
+        with:
+          name: LambdaArtifacts
+          template: cfn/lambda-artifacts.yml
+          capabilities: 'CAPABILITY_NAMED_IAM'
+
+      - name: Zip Ingest Lambda
+        run: zip -r ingest.zip src/ingest
+
       - name: Deploy Stream and Storage
         uses: aws-actions/aws-cloudformation-github-deploy@v1.0.3
         env:

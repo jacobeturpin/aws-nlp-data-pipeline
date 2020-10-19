@@ -7,3 +7,8 @@ Resources:
       Type: AWS::S3::Bucket
       Properties:
         BucketName: !Sub ${AWS::StackName}-lambda
+
+Outputs:
+
+  LambdaSourceBucket:
+    Description: Name of S3 bucket where Lambda artifacts are stored
