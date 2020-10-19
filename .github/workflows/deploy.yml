@@ -22,6 +22,8 @@ jobs:
 
   cloudformation-deploy:
     
+    if: "!contains(github.event.commits[0].message, '[skip ci]')"
+    
     runs-on: ubuntu-latest
     
     needs: cloudformation-linter
@@ -37,7 +39,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
       
-      - name: deploy
+      - name: Deploy Stream and Storage
         uses: aws-actions/aws-cloudformation-github-deploy@v1.0.3
         env:
           LOG_BUCKET_NAME: numsds498awsnlp
