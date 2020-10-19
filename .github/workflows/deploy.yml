@@ -18,7 +18,7 @@ jobs:
       - name: cfn-lint
         uses: ScottBrenner/cfn-lint-action@master
         with:
-          args: "stack.yml"
+          args: "storage-stack.yml"
 
   cloudformation-deploy:
     
@@ -48,6 +48,6 @@ jobs:
           FIREHOSE_NAME: firehosetest
         with:
           name: TestStack
-          template: stack.yml
+          template: storage-stack.yml
           capabilities: 'CAPABILITY_NAMED_IAM'
           parameter-overrides: "LogBucketName=${{ env.LOG_BUCKET_NAME }},ElasticsearchDomainName=${{ env.ELASTICSEARCH_DOMAIN_NAME }},ElasticsearchIndexName=${{ env.ELASTICSEARCH_INDEX_NAME }},FirehoseName=${{ env.FIREHOSE_NAME }}"
