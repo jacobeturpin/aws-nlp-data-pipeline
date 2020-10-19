@@ -64,24 +64,10 @@ Resources:
               -
                 Effect: Allow
                 Action:
-                  - kinesis:GetRecords
-                  - kinesis:GetShardIterator
-                  - kinesis:DescribeStream
-                  - kinesis:ListStreams
-                Resource:
-                  - !Ref KinesisDataStreamArn
-              -
-                Effect: Allow
-                Action:
                   - firehose:PutRecord
                   - firehose:PutRecordBatch
                 Resource:
-                  - !Ref FirehoseDeliveryStreamArn
-              -
-                Effect: Allow
-                Action:
-                  - kinesis:ListStreams
-                Resource: '*'
+                  - arn:aws:firehose:*:*:*
       ManagedPolicyArns:
       - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
 
