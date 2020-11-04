@@ -18,10 +18,10 @@ jobs:
       - name: cfn-lint
         uses: ScottBrenner/cfn-lint-action@master
         with:
-          args: "stack.yml"
+          args: "cfn/*.yml"
 
   cloudformation-deploy:
-    
+
     if: "!contains(github.event.commits[0].message, '[skip ci]')"
     
     runs-on: ubuntu-latest
@@ -29,9 +29,13 @@ jobs:
     needs: cloudformation-linter
     
     steps:
+
       - name: Checkout
         uses: actions/checkout@v2
-        
+      
+      - name: Install Zip
+        run: apt-get install zip
+  
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -39,6 +43,19 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
       
+      - name: Deploy Lambda Artifact Bucket
+        uses: aws-actions/aws-cloudformation-github-deploy@v1.0.3
+        with:
+          name: LambdaArtifacts
+          template: cfn/lambda-artifacts.yml
+          capabilities: 'CAPABILITY_NAMED_IAM'
+
+      - name: Zip Ingest Lambda
+        run: zip -r ingest.zip src/ingest
+
+      - name: Push Zip
+        run: aws s3 cp ingest.zip ${{env.LambdaSourceBucket}}/ingest.zip
+
       - name: Deploy Stream and Storage
         uses: aws-actions/aws-cloudformation-github-deploy@v1.0.3
         env:
@@ -48,6 +65,6 @@ jobs:
           FIREHOSE_NAME: firehosetest
         with:
           name: TestStack
-          template: stack.yml
+          template: storage-stack.yml
           capabilities: 'CAPABILITY_NAMED_IAM'
           parameter-overrides: "LogBucketName=${{ env.LOG_BUCKET_NAME }},ElasticsearchDomainName=${{ env.ELASTICSEARCH_DOMAIN_NAME }},ElasticsearchIndexName=${{ env.ELASTICSEARCH_INDEX_NAME }},FirehoseName=${{ env.FIREHOSE_NAME }}"
