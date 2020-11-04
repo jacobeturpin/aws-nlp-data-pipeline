@@ -6,7 +6,7 @@ Resources:
   LambdaSourceBucket:
       Type: AWS::S3::Bucket
       Properties:
-        BucketName: !Sub ${AWS::StackName}-lambda
+        BucketName: aws-nlp-data-pipeline-lambda
 
 Outputs:
 
