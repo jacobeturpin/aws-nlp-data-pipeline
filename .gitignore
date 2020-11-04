@@ -127,9 +127,3 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-
-# VS Code settings
-.vscode
-
-# GitHub Codespaces
-pythonenv*

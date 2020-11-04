@@ -24,4 +24,4 @@ jobs:
       - name: cfn-lint
         uses: ScottBrenner/cfn-lint-action@master
         with:
-          args: "cfn/*.yml"
+          args: "stack.yml"
