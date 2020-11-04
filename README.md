@@ -1,2 +1,2 @@
-# AWS NLP Data Pipeline
+# aws-nlp-data-pipeline
 Pipeline for ingesting and leveraging text data using AWS services
