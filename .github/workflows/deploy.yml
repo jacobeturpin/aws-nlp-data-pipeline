@@ -51,7 +51,7 @@ jobs:
         run: zip -r ingest.zip src/ingest
 
       - name: Push Zip
-        run: aws s3 cp ingest.zip ${{env.LambdaSourceBucket}}/ingest.zip
+        run: aws s3 cp ingest.zip s3://${{steps.Deploy_Lambda_Artifact_Bucket.outputs.LambdaSourceBucket}}/ingest.zip
 
       - name: Deploy Stream and Storage
         uses: aws-actions/aws-cloudformation-github-deploy@v1.0.3
