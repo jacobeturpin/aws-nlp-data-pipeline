@@ -1,0 +1,75 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: AWS Lambda Deployment Stack
+
+Parameters:
+
+  FirehoseDeliveryStreamName:
+    Description: Name of the Kinesis Firehose delivery stream
+    Type: String
+    MinLength: 1
+
+
+  S3SourceBucket:
+    Type: String
+    Description: S3 bucket where Lambda functions source are stored
+
+
+Resources:
+
+  IngestLambda:
+    Type: AWS::Lambda::Function
+    Properties:
+      Description: Consumes records and forward to Firehose delivery stream
+      FunctionName: !Sub ${AWS::StackName}-handler
+      Runtime: python3.8
+      Handler: ingest.lambda_handler
+      Code:
+        S3Bucket: !Ref S3SourceBucket
+        S3Key: ingest/ingest.zip
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Timeout: 3
+      MemorySize: 128
+      Environment:
+        Variables:
+          STREAM_NAME: !Ref FirehoseDeliveryStreamName
+
+  LambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub ${AWS::StackName}-lambda-exec
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          -
+            Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Policies:
+        -
+          PolicyName: !Sub ${AWS::StackName}-lambda-policy
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              -
+                Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource:
+                  - arn:aws:logs:*:*:*
+              -
+                Effect: Allow
+                Action:
+                  - firehose:PutRecord
+                  - firehose:PutRecordBatch
+                Resource:
+                  - arn:aws:firehose:*:*:*
+      ManagedPolicyArns:
+      - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+
+
+
