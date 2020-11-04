@@ -1,5 +1,0 @@
-"""Ingest Lambda Function"""
-
-
-def lambda_handler(event, context):
-    print("Hello from Lambda!")
