@@ -41,6 +41,7 @@ jobs:
           aws-region: us-east-1
       
       - name: deploy-lambda-artifact-bucket
+        id: deploy-lambda-artifact-bucket
         uses: aws-actions/aws-cloudformation-github-deploy@v1.0.3
         with:
           name: LambdaArtifacts
@@ -51,10 +52,12 @@ jobs:
       - name: zip-ingest-lambda
         run: zip -r ingest.zip src/ingest
 
-      - run: echo s3://${{steps.deploy-lambda-artifact-bucket.outputs.LambdaSourceBucket}}/ingest.zip
+      - run: echo s3://${{ steps.deploy-lambda-artifact-bucket.outputs.LambdaSourceBucket }}/ingest.zip
 
       - name: push-zip
-        run: aws s3 cp ingest.zip s3://${{steps.deploy-lambda-artifact-bucket.outputs.LambdaSourceBucket}}/ingest.zip
+        env:
+          BUCKET: ${{ steps.deploy-lambda-artifact-bucket.outputs.LambdaSourceBucket }}
+        run: aws s3 cp ingest.zip "s3://$BUCKET/ingest.zip"
 
       - name: deploy-stream-and-storage
         uses: aws-actions/aws-cloudformation-github-deploy@v1.0.3
