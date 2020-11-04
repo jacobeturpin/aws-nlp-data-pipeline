@@ -12,3 +12,4 @@ Outputs:
 
   LambdaSourceBucket:
     Description: Name of S3 bucket where Lambda artifacts are stored
+    Value: !Ref 'LambdaSourceBucket'
