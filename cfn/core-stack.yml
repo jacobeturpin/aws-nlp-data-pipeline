@@ -1,7 +1,6 @@
-AWSTemplateFormatVersion: 2010-09-09
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Artifacts for Lambda functions
 
-Description: |
-  Kinesis Firehose, Elasticsearch, S3
 Parameters:
   LogBucketName:
     Type: String
@@ -23,8 +22,12 @@ Parameters:
     AllowedPattern: '[a-z][a-z0-9]*'
     Description: DeliveryStream for ES and S3 [a-z][a-z0-9]*
 
-
 Resources:
+
+  LambdaSourceBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: aws-nlp-data-pipeline-lambda
 
   ElasticsearchDomain: 
     Type: AWS::Elasticsearch::Domain
@@ -179,3 +182,10 @@ Resources:
     Properties:
       BucketName: !Ref "LogBucketName"
       AccessControl: Private
+
+
+Outputs:
+
+  LambdaSourceBucket:
+    Description: Name of S3 bucket where Lambda artifacts are stored
+    Value: !Ref LambdaSourceBucket

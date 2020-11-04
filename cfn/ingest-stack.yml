@@ -3,16 +3,29 @@ Description: AWS Lambda Deployment Stack
 
 Parameters:
 
-  FirehoseDeliveryStreamName:
-    Description: Name of the Kinesis Firehose delivery stream
-    Type: String
-    MinLength: 1
-
-
   S3SourceBucket:
     Type: String
     Description: S3 bucket where Lambda functions source are stored
 
+  LogBucketName:
+    Type: String
+    AllowedPattern: '[a-z][a-z0-9]*'
+    Description: Name of Amazon S3 bucket for log [a-z][a-z0-9]*
+
+  ElasticsearchDomainName:
+    Type: String
+    AllowedPattern: '[a-z][a-z0-9]*'
+    Description: Name of Elasticsearch domain for log [a-z][a-z0-9]*
+
+  ElasticsearchIndexName:
+    Type: String
+    AllowedPattern: '[a-z][a-z0-9]*'
+    Description: Name of Elasticsearch index from Kinesis Firehose [a-z][a-z0-9]*
+    
+  FirehoseName:
+    Type: String
+    AllowedPattern: '[a-z][a-z0-9]*'
+    Description: DeliveryStream for ES and S3 [a-z][a-z0-9]*
 
 Resources:
 
