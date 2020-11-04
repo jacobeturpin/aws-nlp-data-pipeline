@@ -32,9 +32,6 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v2
-      
-      - name: Install Zip
-        run: apt-get install zip
   
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
