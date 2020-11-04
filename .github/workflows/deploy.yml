@@ -51,6 +51,8 @@ jobs:
       - name: Zip Ingest Lambda
         run: zip -r ingest.zip src/ingest
 
+      - run: echo s3://${{steps.Deploy_Lambda_Artifact_Bucket.outputs.LambdaSourceBucket}}/ingest.zip
+
       - name: Push Zip
         run: aws s3 cp ingest.zip s3://${{steps.Deploy_Lambda_Artifact_Bucket.outputs.LambdaSourceBucket}}/ingest.zip
 
