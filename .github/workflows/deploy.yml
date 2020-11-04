@@ -46,6 +46,7 @@ jobs:
           name: LambdaArtifacts
           template: cfn/lambda-artifacts.yml
           capabilities: 'CAPABILITY_NAMED_IAM'
+          no-fail-on-empty-changeset: 1
 
       - name: Zip Ingest Lambda
         run: zip -r ingest.zip src/ingest
