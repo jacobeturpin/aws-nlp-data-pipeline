@@ -38,7 +38,7 @@ Resources:
       Handler: ingest.lambda_handler
       Code:
         S3Bucket: !Ref S3SourceBucket
-        S3Key: ingest/ingest.zip
+        S3Key: ingest.zip
       Role: !GetAtt LambdaExecutionRole.Arn
       Timeout: 3
       MemorySize: 128
