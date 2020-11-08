@@ -98,6 +98,16 @@ Resources:
                   - firehose:PutRecordBatch
                 Resource:
                   - arn:aws:firehose:*:*:*
+              -
+                Effect: Allow
+                Action:
+                  - comprehend:DetectEntities
+                  - comprehend:DetectKeyPhrases
+                  - comprehend:DetectDominantLanguage
+                  - comprehend:DetectSentiment
+                  - comprehend:DetectSyntax
+                Resource:
+                  - *
       ManagedPolicyArns:
       - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
 
