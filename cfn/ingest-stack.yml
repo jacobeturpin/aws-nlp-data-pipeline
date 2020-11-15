@@ -61,7 +61,7 @@ Resources:
       MemorySize: 128
       Environment:
         Variables:
-          STREAM_NAME: !Sub {FirehoseName}
+          STREAM_NAME: !Sub ${FirehoseName}
 
   LambdaExecutionRole:
     Type: AWS::IAM::Role
