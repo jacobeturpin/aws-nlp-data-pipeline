@@ -133,3 +133,6 @@ dmypy.json
 
 # GitHub Codespaces
 pythonenv*
+
+# File system
+.DS_Store
