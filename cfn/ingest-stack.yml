@@ -57,7 +57,7 @@ Resources:
         S3Bucket: !Ref S3SourceBucket
         S3Key: comprehend.zip
       Role: !GetAtt LambdaExecutionRole.Arn
-      Timeout: 3
+      Timeout: 60
       MemorySize: 128
       Environment:
         Variables:
