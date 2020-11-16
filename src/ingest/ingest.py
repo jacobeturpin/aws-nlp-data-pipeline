@@ -1,6 +1,7 @@
 """Forward records to Kinesis Firehose Stream"""
 
 import json
+import os
 
 import boto3
 
