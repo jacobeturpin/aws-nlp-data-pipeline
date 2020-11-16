@@ -40,10 +40,10 @@ jobs:
           parameter-overrides: "LogBucketName=${{ env.LOG_BUCKET_NAME }},ElasticsearchDomainName=${{ env.ELASTICSEARCH_DOMAIN_NAME }},ElasticsearchIndexName=${{ env.ELASTICSEARCH_INDEX_NAME }},FirehoseName=${{ env.FIREHOSE_NAME }}"
 
       - name: zip-ingest-lambda
-        run: cd src/ingest && zip -r ingest.zip ./*
+        run: zip -r -j ingest.zip ./src/ingest/
       
       - name: zip-comprehend-lambda
-        run: cd src/comprehend && zip -r comprehend.zip ./*
+        run: zip -r -j comprehend.zip ./src/ingest/
 
       - name: push-zip
         env:
