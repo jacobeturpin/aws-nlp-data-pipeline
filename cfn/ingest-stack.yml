@@ -118,7 +118,14 @@ Resources:
     Properties:
       DeliveryStreamName: !Sub "${FirehoseName}"
       DeliveryStreamType: "DirectPut"
-      ElasticsearchDestinationConfiguration: 
+      ElasticsearchDestinationConfiguration:
+        ProcessingConfiguration:
+          Enabled: 'true'
+          Processors:
+            - Parameters:
+              - ParameterName: LambdaArn
+                ParameterValue: !GetAtt ComprehendLambda.Arn
+              Type: Lambda 
         BufferingHints: 
           IntervalInSeconds: 60
           SizeInMBs: 50
