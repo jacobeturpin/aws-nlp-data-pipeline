@@ -17,7 +17,7 @@ def lambda_handler(event, context):
         DeliveryStreamName=DELIVERY_STREAM_NAME,
         Records=[
             {
-                'Data': record
+                'Data': json.dumps(record).encode()
             }
             for record in event['data']
         ]
