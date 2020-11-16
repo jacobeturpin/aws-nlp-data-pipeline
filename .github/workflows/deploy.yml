@@ -68,3 +68,9 @@ jobs:
           capabilities: 'CAPABILITY_NAMED_IAM'
           no-fail-on-empty-changeset: 1
           parameter-overrides: "S3SourceBucket=${{ steps.deploy-core-stack.outputs.LambdaSourceBucket }},LogBucketName=${{ env.LOG_BUCKET_NAME }},ElasticsearchDomainName=${{ env.ELASTICSEARCH_DOMAIN_NAME }},ElasticsearchIndexName=${{ env.ELASTICSEARCH_INDEX_NAME }},FirehoseName=${{ env.FIREHOSE_NAME }}"
+      
+      - name: update-ingest-code
+        run: aws lambda update-function-code IngestStack-handler --function-name --s3-bucket ${{ steps.deploy-core-stack.outputs.LambdaSourceBucket }} --s3-key ingest.zip
+
+      - name: update-comprehend-code
+        run: aws lambda update-function-code IngestStack-comprehend-handler --function-name --s3-bucket ${{ steps.deploy-core-stack.outputs.LambdaSourceBucket }} --s3-key comprehend.zip
