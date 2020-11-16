@@ -8,6 +8,8 @@ import boto3
 DELIVERY_STREAM_NAME = os.environ['STREAM_NAME']
 
 def lambda_handler(event, context):
+
+    print(event['data'])
     
     client = boto3.client('firehose')
 

@@ -25,7 +25,7 @@ def push_to_lambda(records):
 
 def main():
     df = pd.read_csv(DATA, engine='python', quoting=1)
-    df = df.head(250)
+    df = df.head(50)
 
     print(df.head())
 
@@ -34,6 +34,8 @@ def main():
 
     for i in chunker(df,5):
         records = i.to_json(orient='records')
+        print(len(records))
+        print(records)
         push_to_lambda(records)
 
 if __name__ == '__main__':
