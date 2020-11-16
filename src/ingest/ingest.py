@@ -28,7 +28,7 @@ def lambda_handler(event, context):
             {
                 'Data': json.dumps(record)
             }
-            for record in event['data']
+            for record in data
         ]
     )
 
