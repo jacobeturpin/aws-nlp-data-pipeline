@@ -15,7 +15,9 @@ def lambda_handler(event, context):
 
         print(record['data'])
 
-        payload = record['data']
+        payload = json.loads(
+            base64.b64decode(record['data'])
+        )
 
         # Do custom processing on the payload here
         sentiment = client.detect_sentiment(Text=payload['text'], LanguageCode='en')
@@ -27,7 +29,7 @@ def lambda_handler(event, context):
         output_record = {
             'recordId': record['recordId'],
             'result': 'Ok',
-            'data': base64.b64encode(enriched.encode()).decode()
+            'data': enriched.encode()
         }
         output.append(output_record)
 
