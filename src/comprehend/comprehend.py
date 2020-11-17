@@ -13,7 +13,9 @@ def lambda_handler(event, context):
 
     for record in event['records']:
 
-        payload = json.loads(record['data'])
+        print(record['data'])
+
+        payload = record['data']
 
         # Do custom processing on the payload here
         sentiment = client.detect_sentiment(Text=payload['text'], LanguageCode='en')
