@@ -244,6 +244,6 @@ Resources:
             Action:
               - 'lambda:InvokeFunction'
               - 'lambda:GetFunctionConfiguration'
-            Resource: !Ref ComprehendLambda
+            Resource: !GetAtt ComprehendLambda.Arn
 
 
