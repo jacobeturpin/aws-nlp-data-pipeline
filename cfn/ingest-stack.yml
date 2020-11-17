@@ -77,6 +77,9 @@ Resources:
                 - lambda.amazonaws.com
             Action:
               - sts:AssumeRole
+            Resource:
+              - !GetAtt IngestLambda.Arn
+              - !GetAtt ComprehendLambda.Arn
       Policies:
         -
           PolicyName: !Sub ${AWS::StackName}-lambda-policy
