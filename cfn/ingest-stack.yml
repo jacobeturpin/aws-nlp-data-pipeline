@@ -240,5 +240,10 @@ Resources:
                 'kms:ViaService': !Sub 's3.${AWS::Region}.amazonaws.com'
               StringLike:
                 'kms:EncryptionContext:aws:s3:arn': !Sub 'arn:aws:::${LogBucketName}/*'
+          - Effect: Allow
+            Action:
+              - 'lambda:InvokeFunction'
+              - 'lambda:GetFunctionConfiguration'
+            Resource: !Ref ComprehendLambda
 
 
