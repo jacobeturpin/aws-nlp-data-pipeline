@@ -74,7 +74,8 @@ Resources:
             Effect: Allow
             Principal:
               Service:
-                - lambda.amazonaws.com
+                - 'lambda.amazonaws.com'
+                - 'firehose.amazonaws.com'
             Action:
               - sts:AssumeRole
       Policies:
@@ -107,7 +108,7 @@ Resources:
                   - comprehend:DetectSentiment
                   - comprehend:DetectSyntax
                 Resource:
-                  - arn:aws:comprehend:*
+                  - '*'
       ManagedPolicyArns:
       - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
 
