@@ -43,7 +43,7 @@ jobs:
         run: zip -r -j ingest.zip ./src/ingest/
       
       - name: zip-comprehend-lambda
-        run: zip -r -j comprehend.zip ./src/ingest/
+        run: zip -r -j comprehend.zip ./src/comprehend/
 
       - name: push-zip
         env:
