@@ -49,6 +49,8 @@ Resources:
         VolumeType: "gp2"
       SnapshotOptions: 
         AutomatedSnapshotStartHour: 0
+      NodeToNodeEncryptionOptions:
+        Enabled: true
       AdvancedSecurityOptions:
         Enabled: true
         InternalUserDatabaseEnabled: true
