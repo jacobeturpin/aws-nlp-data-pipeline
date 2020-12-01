@@ -49,6 +49,8 @@ Resources:
         VolumeType: "gp2"
       SnapshotOptions: 
         AutomatedSnapshotStartHour: 0
+      DomainEndpointOptions:
+        EnforceHTTPS: true
       EncryptionAtRestOptions:
         Enabled: true
       NodeToNodeEncryptionOptions:
