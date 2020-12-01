@@ -22,6 +22,11 @@ Parameters:
     AllowedPattern: '[a-z][a-z0-9]*'
     Description: DeliveryStream for ES and S3 [a-z][a-z0-9]*
 
+  MasterPassword:
+    Type: String
+    Description: Master password for Elastic admin user
+    MinLength: 12
+
 Resources:
 
   LambdaSourceBucket:
@@ -33,7 +38,7 @@ Resources:
     Type: AWS::Elasticsearch::Domain
     Properties:
       DomainName: !Sub "${ElasticsearchDomainName}"
-      ElasticsearchVersion: "6.2"
+      ElasticsearchVersion: "7.9"
       ElasticsearchClusterConfig: 
         InstanceCount: 1
         InstanceType: "t3.small.elasticsearch"
@@ -44,6 +49,12 @@ Resources:
         VolumeType: "gp2"
       SnapshotOptions: 
         AutomatedSnapshotStartHour: 0
+      AdvancedSecurityOptions:
+        Enabled: true
+        InternalUserDatabaseEnabled: true
+        MasterUserOptions:
+          MasterUserName: "admin"
+          MasterUserPassword: !Sub "${MasterPassword}"
       AccessPolicies: 
         Version: "2012-10-17"
         Statement: 
