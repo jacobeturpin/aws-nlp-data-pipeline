@@ -21,11 +21,9 @@ Parameters:
     Type: String
     AllowedPattern: '[a-z][a-z0-9]*'
     Description: DeliveryStream for ES and S3 [a-z][a-z0-9]*
-
-  MasterPassword:
+  
+  IPAddress:
     Type: String
-    Description: Master password for Elastic admin user
-    MinLength: 12
 
 Resources:
 
@@ -49,18 +47,6 @@ Resources:
         VolumeType: "gp2"
       SnapshotOptions: 
         AutomatedSnapshotStartHour: 0
-      DomainEndpointOptions:
-        EnforceHTTPS: true
-      EncryptionAtRestOptions:
-        Enabled: true
-      NodeToNodeEncryptionOptions:
-        Enabled: true
-      AdvancedSecurityOptions:
-        Enabled: true
-        InternalUserDatabaseEnabled: true
-        MasterUserOptions:
-          MasterUserName: "admin"
-          MasterUserPassword: !Sub "${MasterPassword}"
       AccessPolicies: 
         Version: "2012-10-17"
         Statement: 
@@ -70,12 +56,14 @@ Resources:
             Action: "es:*"
             Resource: 
               - !Sub "arn:aws:es:${AWS::Region}:${AWS::AccountId}:domain/${ElasticsearchDomainName}/*"
-              - !Sub arn:aws:iam::${AWS::AccountId}:role/DeliveryRole
-          - Effect: "Allow"
-            Principal:
-              AWS: "*"
-            Action: "es:ESHttp*"
-            Resource: !Sub "arn:aws:es:${AWS::Region}:${AWS::AccountId}:domain/${ElasticsearchDomainName}/*"
+          - Effect: Allow
+              Principal:
+                AWS: '*'
+              Action: 'es:ESHttp*'
+              Resource: !Sub "arn:aws:es:${self:provider.region}:${AWS::AccountId}:domain/images-search-${self:provider.stage}/*"
+              Condition:
+                IpAddress:
+                   aws:SourceIp: [!Sub "${IPAddress}"] 
 
   LogBucket:
     Type: 'AWS::S3::Bucket'

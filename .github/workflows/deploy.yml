@@ -37,7 +37,7 @@ jobs:
           template: cfn/core-stack.yml
           capabilities: 'CAPABILITY_NAMED_IAM'
           no-fail-on-empty-changeset: 1
-          parameter-overrides: "LogBucketName=${{ env.LOG_BUCKET_NAME }},ElasticsearchDomainName=${{ env.ELASTICSEARCH_DOMAIN_NAME }},ElasticsearchIndexName=${{ env.ELASTICSEARCH_INDEX_NAME }},FirehoseName=${{ env.FIREHOSE_NAME }},MasterPassword=${{ secrets.MASTER_PASSWORD }}"
+          parameter-overrides: "LogBucketName=${{ env.LOG_BUCKET_NAME }},ElasticsearchDomainName=${{ env.ELASTICSEARCH_DOMAIN_NAME }},ElasticsearchIndexName=${{ env.ELASTICSEARCH_INDEX_NAME }},FirehoseName=${{ env.FIREHOSE_NAME }},IPAddress=${{ secrets.IP_ADDRESS }}"
 
       - name: zip-ingest-lambda
         run: zip -r -j ingest.zip ./src/ingest/
