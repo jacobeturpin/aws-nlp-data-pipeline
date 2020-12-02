@@ -57,13 +57,13 @@ Resources:
             Resource: 
               - !Sub "arn:aws:es:${AWS::Region}:${AWS::AccountId}:domain/${ElasticsearchDomainName}/*"
           - Effect: Allow
-              Principal:
-                AWS: '*'
-              Action: 'es:ESHttp*'
-              Resource: !Sub "arn:aws:es:${self:provider.region}:${AWS::AccountId}:domain/images-search-${self:provider.stage}/*"
-              Condition:
-                IpAddress:
-                   aws:SourceIp: [!Sub "${IPAddress}"] 
+            Principal:
+              AWS: '*'
+            Action: 'es:ESHttp*'
+            Resource: !Sub "arn:aws:es:${self:provider.region}:${AWS::AccountId}:domain/images-search-${self:provider.stage}/*"
+            Condition:
+              IpAddress:
+                aws:SourceIp: [!Sub "${IPAddress}"] 
 
   LogBucket:
     Type: 'AWS::S3::Bucket'
