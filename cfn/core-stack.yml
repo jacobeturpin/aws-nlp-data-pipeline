@@ -68,7 +68,9 @@ Resources:
             Principal:
               AWS: !Sub "arn:aws:iam::${AWS::AccountId}:root"
             Action: "es:*"
-            Resource: !Sub "arn:aws:es:${AWS::Region}:${AWS::AccountId}:domain/${ElasticsearchDomainName}/*"
+            Resource: 
+              - !Sub "arn:aws:es:${AWS::Region}:${AWS::AccountId}:domain/${ElasticsearchDomainName}/*"
+              - !Sub arn:aws:iam::${AWS::AccountId}:role/DeliveryRole
           - Effect: "Allow"
             Principal:
               AWS: "*"
