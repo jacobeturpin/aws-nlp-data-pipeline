@@ -60,7 +60,7 @@ Resources:
             Principal:
               AWS: '*'
             Action: 'es:ESHttp*'
-            Resource: !Sub "arn:aws:es:${self:provider.region}:${AWS::AccountId}:domain/images-search-${self:provider.stage}/*"
+            Resource: !Sub "arn:aws:es:${AWS::Region}:${AWS::AccountId}:domain/images-search-${self:provider.stage}/*"
             Condition:
               IpAddress:
                 aws:SourceIp: [!Sub "${IPAddress}"] 
