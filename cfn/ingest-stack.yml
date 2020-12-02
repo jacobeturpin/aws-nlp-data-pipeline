@@ -155,6 +155,7 @@ Resources:
         DomainARN: !Sub "arn:aws:es:${AWS::Region}:${AWS::AccountId}:domain/${ElasticsearchDomainName}"
         IndexName: !Ref "ElasticsearchIndexName"
         IndexRotationPeriod: "NoRotation"
+        TypeName: ""
         RetryOptions: 
           DurationInSeconds: 60
         RoleARN: !GetAtt DeliveryRole.Arn
