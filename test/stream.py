@@ -25,7 +25,7 @@ def push_to_lambda(records):
 
 def main():
     df = pd.read_csv(DATA, engine='python', quoting=1)
-    df = df.head(50)
+    df = df.head(500)
 
     print(df.head())
 
