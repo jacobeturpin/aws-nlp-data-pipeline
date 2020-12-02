@@ -246,5 +246,9 @@ Resources:
               - 'lambda:InvokeFunction'
               - 'lambda:GetFunctionConfiguration'
             Resource: !GetAtt ComprehendLambda.Arn
+          - Effect: Allow
+            Action:
+              - 'logs:*'
+            Resource: !Sub 'arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:*:log-stream:*'
 
 
