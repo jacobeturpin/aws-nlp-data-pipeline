@@ -34,8 +34,6 @@ def main():
 
     for i in chunker(df,5):
         records = i.to_json(orient='records')
-        print(len(records))
-        print(records)
         push_to_lambda(records)
 
 if __name__ == '__main__':
