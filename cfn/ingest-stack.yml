@@ -112,6 +112,24 @@ Resources:
       ManagedPolicyArns:
       - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
 
+  CloudWatchFirehoseLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub /aws/kinesisfirehose/${AWS:StackName}
+      RetentionInDays: 7
+
+  CloudWatchFirehoseESLogStream:
+    Type: AWS::Logs::LogStream
+    Properties:
+      LogGroupName: !Ref CloudWatchFirehoseLogGroup
+      LogStreamName: es-delivery
+  
+  CloudWatchFirehoseS3LogStream:
+    Type: AWS::Logs::LogStream
+    Properties:
+      LogGroupName: !Ref CloudWatchFirehoseLogGroup
+      LogStreamName: s3-delivery
+  
   ESDeliveryStream: 
     Type: AWS::KinesisFirehose::DeliveryStream
     DependsOn:
@@ -132,8 +150,8 @@ Resources:
           SizeInMBs: 50
         CloudWatchLoggingOptions: 
           Enabled: true
-          LogGroupName: "deliverystream"
-          LogStreamName: "elasticsearchDelivery"
+          LogGroupName: !Ref CloudWatchFirehoseLogGroup
+          LogStreamName: !Ref CloudWatchFirehoseESLogStream
         DomainARN: !Sub "arn:aws:es:${AWS::Region}:${AWS::AccountId}:domain/${ElasticsearchDomainName}"
         IndexName: !Ref "ElasticsearchIndexName"
         IndexRotationPeriod: "NoRotation"
@@ -152,8 +170,8 @@ Resources:
           RoleARN: !GetAtt DeliveryRole.Arn 
           CloudWatchLoggingOptions: 
             Enabled: true
-            LogGroupName: "deliverystream"
-            LogStreamName: "s3Backup"
+            LogGroupName: !Ref CloudWatchFirehoseLogGroup
+            LogStreamName: !Ref CloudWatchFirehoseS3LogStream
 
   DeliveryRole:
     Type: 'AWS::IAM::Role'
@@ -248,7 +266,9 @@ Resources:
             Resource: !GetAtt ComprehendLambda.Arn
           - Effect: Allow
             Action:
-              - 'logs:*'
-            Resource: !Sub 'arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:*:log-stream:*'
+              - 'logs:CreateLogGroup'
+              - 'logs:CreateLogStream'
+              - 'logs:PutLogEvents'
+            Resource: arn:aws:logs:*:*:*
 
 
