@@ -20,6 +20,7 @@ def lambda_handler(event, context):
         )
 
         sentiment = client.detect_sentiment(Text=payload['text'], LanguageCode='en')
+        print(sentiment)
         payload.update(sentiment).pop('ResponseMetadata')
         enriched = json.dumps(payload)
             
