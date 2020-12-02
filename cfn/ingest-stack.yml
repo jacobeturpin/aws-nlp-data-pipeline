@@ -115,7 +115,7 @@ Resources:
   CloudWatchFirehoseLogGroup:
     Type: AWS::Logs::LogGroup
     Properties:
-      LogGroupName: !Sub /aws/kinesisfirehose/${AWS:StackName}
+      LogGroupName: !Sub /aws/kinesisfirehose/${AWS::StackName}
       RetentionInDays: 7
 
   CloudWatchFirehoseESLogStream:
