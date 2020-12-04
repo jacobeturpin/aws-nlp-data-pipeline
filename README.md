@@ -2,6 +2,7 @@
 Ingest real-time streaming text data with automatic appending of NLP metadata
 
 ![Architecture](img/diagram.png)
+![Kibana Dashboard](img/kibana.png)
 
 ## Overview
 
@@ -18,7 +19,7 @@ The following AWS services are leveraged:
 
 ## Deployment
 
-This project leverages [GitHub Actions](https://github.com/features/actions) for its CI/CD pipeline. If forking, you can deploy via your own actions by providing the following Secrets in your repository:
+This project leverages [GitHub Actions](https://github.com/features/actions) for its CI/CD pipeline. If forking, you can deploy via your own Actions by providing the following Secrets in your repository:
 
 * AWS_ACCESS_KEY_ID
 * AWS_SECRET_ACCESS_KEY
